@@ -5,7 +5,7 @@ categories:
 editor: visual
 ---
 
-  For this application exercise, we will work with data on fish. The dataset we will use, called `fish`, is on two common fish species in fish market sales.
+For this application exercise, we will work with data on fish. The dataset we will use, called `fish`, is on two common fish species in fish market sales.
 
 ```{r}
 #| label: load-packages-data
@@ -28,3 +28,143 @@ The data dictionary is below:
   | `length_cross`    | Cross length, in cm    |
   | `height`          | Height, in cm          |
   | `width`           | Diagonal width, in cm  |
+  
+
+# Visualizing the model
+
+We're going to investigate the relationship between the weights and heights of fish.
+
+-   **Demo:** Create an appropriate plot to investigate this relationship. Add appropriate labels to the plot.
+
+```{r}
+#| label: plot-hw
+
+fish |>
+  ggplot(
+    aes(x = height , y = weight)
+  ) + 
+  geom_point() +
+  labs(title = "Weights vs Height of Fish",
+       y = "Weight (gr)",
+       x = "Height (cm)")
+
+```
+  
+
+-   **Your turn (5 minutes):**
+
+If you were to draw a a straight line to best represent the relationship between the heights and weights of fish, where would it go? Why?
+
+      
+*Add response here.*
+
+
+# Picking the best line 
+
+How did R pick this line over another line? Why is this line the "best fit line"?
+
+## Residual
+
+What is a residual?
+
+*observed value - predicted value*
+
+What do residuals look like?
+
+Calculate predicted weights for all fish in the data and visualize the residuals under this model. Hint: We are going to use the `augment` function in R to get the information we need.
+
+```{r}
+#| label: resid 
+
+fish_hw_aug <- augment(fish_model$fit)
+
+fish_hw_aug |>
+ggplot(
+ aes(x = height, y = weight)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +  
+  geom_segment(aes(xend = height, yend = .fitted), color = "gray") +  
+  geom_point(aes(y = .fitted), shape = "circle open") + 
+  theme_minimal() +
+  labs(
+    title = "Weights vs. heights of fish",
+    subtitle = "Residuals",
+    x = "Height (cm)",
+    y = "Weight (gr)"
+  )
+```
+
+![](images/rss.png)
+
+# How do we use this line? 
+
+-   What types of questions can this plot help answer?
+
+*Add response here.*
+
+# Model Prediction
+
+-   **Demo:** Fit a model to predict fish weights from their heights.
+
+```{r}
+#| label: fit-model
+
+fish_model <- linear_reg() |>
+  set_engine("lm") |>
+  fit(weight ~ height , data = fish)
+
+fish_model
+
+```
+
+-   **Your turn (3 minutes):** Predict what the weight of a fish would be with a height of 10 cm, 15 cm, and 20 cm using this model.
+
+```{r}
+#| label: predict-by-hand
+
+x <- c(10,15,20)
+
+-288.42 + 60.92*x
+
+predict(fish_model, data.frame(height = 40))
+
+```
+
+Which prediction is considered extrapolation? Why?
+
+*When we predict outside the bounds of our data*
+
+Why is extrapolation important to consider when making predictions?
+
+*If we do this, we make the assumption that there is a linear relationship between x and y where we have no observed data*
+
+# Model summary
+
+-   **Demo:** Display the model summary including estimates for the slope and intercept along with measurements of uncertainty around them. Show how you can extract these values from the model output.
+
+```{r}
+#| label: model-summary
+
+fish_model |>
+  tidy() 
+```
+
+-   **Demo:** Write out your model using mathematical notation.
+
+Hint: You can type equations within dollar signs. LaTeX equations are authored using standard Pandoc markdown syntax (the editor will automatically recognize the syntax and treat the equation as math in the code chunks). It will appear as rendered math in your document.
+
+Example:
+
+$\hat{x^n} + \beta^n = z_n + \epsilon_i$
+
+
+$add-response$ 
+
+
+Interpret the slope coefficient in the context of the problem
+
+*Add response* 
+
+Interpret the intercent in the context of the problem
+
+*Add response*
