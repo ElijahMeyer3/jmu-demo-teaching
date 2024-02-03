@@ -1,5 +1,5 @@
 ---
-title: "Modelling fish"
+title: "Modeling fish"
 categories:
 - Application exercise
 editor: visual
@@ -38,63 +38,25 @@ We're going to investigate the relationship between the weights and heights of f
 
 ```{r}
 #| label: plot-hw
+#| eval: false
 
 fish |>
   ggplot(
-    aes(x = height , y = weight)
+    aes(x = ... , y = ...)
   ) + 
   geom_point() +
-  labs(title = "Weights vs Height of Fish",
-       y = "Weight (gr)",
-       x = "Height (cm)")
+  #insert code for labels here
 
 ```
   
 
 -   **Your turn (5 minutes):**
 
-If you were to draw a a straight line to best represent the relationship between the heights and weights of fish, where would it go? Why?
+# Fitting your line 
 
-      
-*Add response here.*
+Add the line to your plot above using `geom_smooth()`. Is this a linear model? Why or why not? 
 
-
-# Picking the best line 
-
-How did R pick this line over another line? Why is this line the "best fit line"?
-
-## Residual
-
-What is a residual?
-
-*observed value - predicted value*
-
-What do residuals look like?
-
-Calculate predicted weights for all fish in the data and visualize the residuals under this model. Hint: We are going to use the `augment` function in R to get the information we need.
-
-```{r}
-#| label: resid 
-
-fish_hw_aug <- augment(fish_model$fit)
-
-fish_hw_aug |>
-ggplot(
- aes(x = height, y = weight)) + 
-  geom_point() + 
-  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +  
-  geom_segment(aes(xend = height, yend = .fitted), color = "gray") +  
-  geom_point(aes(y = .fitted), shape = "circle open") + 
-  theme_minimal() +
-  labs(
-    title = "Weights vs. heights of fish",
-    subtitle = "Residuals",
-    x = "Height (cm)",
-    y = "Weight (gr)"
-  )
-```
-
-![](images/rss.png)
+*Add response here*
 
 # How do we use this line? 
 
@@ -108,35 +70,32 @@ ggplot(
 
 ```{r}
 #| label: fit-model
+#| eval: false
 
 fish_model <- linear_reg() |>
-  set_engine("lm") |>
-  fit(weight ~ height , data = fish)
+  set_engine("...") |>
+  fit(... ~ ... , data = fish)
 
 fish_model
 
 ```
 
--   **Your turn (3 minutes):** Predict what the weight of a fish would be with a height of 10 cm, 15 cm, and 20 cm using this model.
+-   **Your turn (3 minutes):** Predict what the weight of a fish would be with a height of 10 cm, 15 cm, and 40 cm using this model.
 
 ```{r}
 #| label: predict-by-hand
 
-x <- c(10,15,20)
-
--288.42 + 60.92*x
-
-predict(fish_model, data.frame(height = 40))
+# insert code here
 
 ```
 
 Which prediction is considered extrapolation? Why?
 
-*When we predict outside the bounds of our data*
+*Add Response Here*
 
 Why is extrapolation important to consider when making predictions?
 
-*If we do this, we make the assumption that there is a linear relationship between x and y where we have no observed data*
+*Add Response Here*
 
 # Model summary
 
@@ -165,6 +124,48 @@ Interpret the slope coefficient in the context of the problem
 
 *Add response* 
 
-Interpret the intercent in the context of the problem
+Interpret the intercept in the context of the problem
 
 *Add response*
+
+# Why this line and not another?
+
+Let's brainstorm how R picked this line over another line? Why is this line the "best fit line"?
+
+      
+*Add response here.*
+
+
+## Residual
+
+What is a residual?
+
+*Add response here*
+
+What do residuals look like?
+
+Calculate predicted weights for all fish in the data and visualize the residuals under this model. Hint: We are going to use the `augment` function in R to get the information we need.
+
+```{r}
+#| label: resid 
+
+fish_hw_aug <- augment(fish_model$fit)
+
+fish_hw_aug |>
+ggplot(
+ aes(x = height, y = weight)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +  
+  geom_segment(aes(xend = height, yend = .fitted), color = "gray") +  
+  geom_point(aes(y = .fitted), shape = "circle open") + 
+  theme_minimal() +
+  labs(
+    title = "Weights vs. heights of fish",
+    subtitle = "Residuals",
+    x = "Height (cm)",
+    y = "Weight (gr)"
+  )
+```
+
+![](images/rss.png)
+
