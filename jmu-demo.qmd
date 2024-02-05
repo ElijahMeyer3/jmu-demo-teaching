@@ -103,7 +103,7 @@ Why is extrapolation important to consider when making predictions?
 
 # Model summary
 
--   **Demo:** Display the model summary including estimates for the slope and intercept along with measurements of uncertainty around them. Show how you can extract these values from the model output.
+-   **Demo:** Display the model summary including estimates for the slope and intercept along with measurements of uncertainty around them. 
 
 ```{r}
 #| label: model-summary
