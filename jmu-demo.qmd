@@ -32,7 +32,11 @@ The data dictionary is below:
 
 # Visualizing the model
 
-We're going to investigate the relationship between the weights and heights of fish.
+We're going to investigate the relationship between the weights and heights of fish. Specifically, we are interested in if height explains the changes in fish weight.
+
+Our explanatory variable is *Add response here* 
+
+Our response variable is *Add response here*
 
 -   **Demo:** Create an appropriate plot to investigate this relationship. Add appropriate labels to the plot.
 
@@ -50,13 +54,13 @@ fish |>
 ```
   
 
--   **Your turn (5 minutes):**
-
 # Fitting your line 
 
-Add the line to your plot above using `geom_smooth()`. Is this a linear model? Why or why not? 
+Add the line to your plot above using `geom_smooth()`. Is this a linear model? Why or why not? If not, let's fix it!
 
 *Add response here*
+
+
 
 # How do we use this line? 
 
@@ -119,6 +123,7 @@ $\hat{x^n} + \beta^n = z_n + \epsilon_i$
 
 $add-response$ 
 
+# Interpretations 
 
 Interpret the slope coefficient in the context of the problem
 
